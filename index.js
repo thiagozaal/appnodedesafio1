@@ -28,23 +28,23 @@ app.get('/', (req, res) => {
   return res.render('form')
 })
 
-app.post('/check', middlewareCheck, (req, res) => {
-  const idade = req.body.age
-  if (idade >= 18) {
-    res.redirect(`/major/${idade}`)
+app.post('/check', (req, res) => {
+  const { age } = req.body
+  if (age >= 18) {
+    res.redirect(`/major?age=${age}`)
   } else {
-    res.redirect(`/minor/${idade}`)
+    res.redirect(`/minor?age=${age}`)
   }
 })
 
-app.get('/major/:age', (req, res) => {
-  const idade = req.params.age
-  return res.render('major', { idade })
+app.get('/major', middlewareCheck, (req, res) => {
+  const { age } = req.query
+  return res.render('major', { age })
 })
 
-app.get('/minor/:age', (req, res) => {
-  const idade = req.params.age
-  return res.render('minor', { idade })
+app.get('/minor', middlewareCheck, (req, res) => {
+  const { age } = req.query
+  return res.render('minor', { age })
 })
 
 // Iniciando Porta
