@@ -16,7 +16,8 @@ app.set('view engine', 'njk') // definindo o formato das view's(njk)
 
 // Iniciando Middleware
 const middlewareCheck = (req, res, next) => {
-  if (req.body.age === '') {
+  const { age } = req.query
+  if (age === '') {
     return res.redirect('/')
   } else {
     next()
